@@ -1,0 +1,135 @@
+proxy-groups:
+- name: 📺 流媒体
+  type: select
+  proxies:
+  - PROXY
+  - DIRECT
+  include-all-proxies: true
+- name: 🤖 AI
+  type: select
+  proxies:
+  - PROXY
+  - DIRECT
+  include-all-proxies: true
+- name: 📈 TradingView
+  type: select
+  proxies:
+  - PROXY
+  - DIRECT
+  include-all-proxies: true
+- name: 🇭🇰 香港受限
+  type: select
+  proxies:
+  - PROXY
+  - DIRECT
+  include-all-proxies: true
+- name: 🚀 兜底代理
+  type: select
+  proxies:
+  - PROXY
+  - DIRECT
+  include-all-proxies: true
+rule-providers:
+  hrules-private-direct:
+    type: http
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/hcloudlab/Hrules/main/mihomo/scenes/private_direct.yaml
+    path: ./providers/private_direct.yaml
+    interval: 21600
+  hrules-cn-direct:
+    type: http
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/hcloudlab/Hrules/main/mihomo/scenes/cn_direct.yaml
+    path: ./providers/cn_direct.yaml
+    interval: 21600
+  hrules-cn-ip:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cn.mrs
+    path: ./providers/hrules-cn-ip.mrs
+    interval: 21600
+  hrules-general-ai:
+    type: http
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/hcloudlab/Hrules/main/mihomo/scenes/general_ai.yaml
+    path: ./providers/general_ai.yaml
+    interval: 21600
+  hrules-sensitive-ai:
+    type: http
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/hcloudlab/Hrules/main/mihomo/scenes/sensitive_ai.yaml
+    path: ./providers/sensitive_ai.yaml
+    interval: 21600
+  hrules-streaming-media:
+    type: http
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/hcloudlab/Hrules/main/mihomo/scenes/streaming_media.yaml
+    path: ./providers/streaming_media.yaml
+    interval: 21600
+  hrules-youtube-media:
+    type: http
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/hcloudlab/Hrules/main/mihomo/scenes/youtube_media.yaml
+    path: ./providers/youtube_media.yaml
+    interval: 21600
+  hrules-crypto-account:
+    type: http
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/hcloudlab/Hrules/main/mihomo/scenes/crypto_account.yaml
+    path: ./providers/crypto_account.yaml
+    interval: 21600
+  hrules-brokerage-account:
+    type: http
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/hcloudlab/Hrules/main/mihomo/scenes/brokerage_account.yaml
+    path: ./providers/brokerage_account.yaml
+    interval: 21600
+  hrules-financial-account:
+    type: http
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/hcloudlab/Hrules/main/mihomo/scenes/financial_account.yaml
+    path: ./providers/financial_account.yaml
+    interval: 21600
+  hrules-us-banking-account:
+    type: http
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/hcloudlab/Hrules/main/mihomo/scenes/us_banking_account.yaml
+    path: ./providers/us_banking_account.yaml
+    interval: 21600
+  hrules-mainstream-proxy:
+    type: http
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/hcloudlab/Hrules/main/mihomo/scenes/mainstream_proxy.yaml
+    path: ./providers/mainstream_proxy.yaml
+    interval: 21600
+rules:
+- RULE-SET,hrules-private-direct,DIRECT,no-resolve
+- RULE-SET,hrules-cn-direct,DIRECT
+- RULE-SET,hrules-cn-ip,DIRECT,no-resolve
+- DOMAIN-SUFFIX,tradingview.com,📈 TradingView
+- RULE-SET,hrules-general-ai,🤖 AI
+- RULE-SET,hrules-sensitive-ai,🤖 AI
+- RULE-SET,hrules-crypto-account,🇭🇰 香港受限
+- RULE-SET,hrules-brokerage-account,🇭🇰 香港受限
+- RULE-SET,hrules-financial-account,🇭🇰 香港受限
+- RULE-SET,hrules-us-banking-account,🇭🇰 香港受限
+- DOMAIN-SUFFIX,mql5.com,🇭🇰 香港受限
+- DOMAIN-SUFFIX,metaquotes.net,🇭🇰 香港受限
+- DOMAIN-SUFFIX,metaquotes.com,🇭🇰 香港受限
+- DOMAIN-SUFFIX,awsglobalaccelerator.com,🇭🇰 香港受限
+- RULE-SET,hrules-streaming-media,📺 流媒体
+- RULE-SET,hrules-youtube-media,📺 流媒体
+- RULE-SET,hrules-mainstream-proxy,📺 流媒体
+- MATCH,🚀 兜底代理
